@@ -6,7 +6,6 @@ import logger from '../common/logger'
 import Vuetify from 'vuetify/lib'
 import VueClipboard from 'vue-clipboard2'
 import colors from 'vuetify/es5/util/colors'
-import 'vuetify/src/stylus/app.styl'
 
 logger.init({Vue})
 

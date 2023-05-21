@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import __ from './i18n'
 import moment from 'moment'
-import {COLORS} from './constants'
+import { COLORS } from './constants'
 import browser from 'webextension-polyfill'
 
 moment.locale(__('@@ui_locale'))
@@ -17,19 +17,14 @@ export const one = fn => {
     if (executing) return
     executing = true
     let re
-    try {
-      re = await fn.apply(this, args) // eslint-disable-line
-    } catch (error) {
-      throw error
-    } finally {
-      executing = false
-    }
+    re = await fn.apply(this, args) // eslint-disable-line
+    executing = false
     return re
   }
 }
 export const checkPermission = async permission => {
-  if (await browser.permissions.contains({permissions: [permission]})) return true
-  return browser.permissions.request({permissions: [permission]})
+  if (await browser.permissions.contains({ permissions: [permission] })) return true
+  return browser.permissions.request({ permissions: [permission] })
 }
 export const readFile = file => new Promise((resolve, reject) => {
   const reader = new FileReader()
@@ -123,18 +118,13 @@ export const throttle = (fn, ms) => {
     lastTime = now
 
     let re // save the result of function
-    try {
-      re = await fn.apply(this, args) // eslint-disable-line
-    } catch (error) {
-      throw error
-    } finally {
-      executing = false
-      if (next) {
-        if (Date.now() - now > ms) {
-          next = false
-          if (timeout) clearTimeout(timeout)
-          throttled(...nextArgs)
-        }
+    re = await fn.apply(this, args) // eslint-disable-line
+    executing = false
+    if (next) {
+      if (Date.now() - now > ms) {
+        next = false
+        if (timeout) clearTimeout(timeout)
+        throttled(...nextArgs)
       }
     }
     return re

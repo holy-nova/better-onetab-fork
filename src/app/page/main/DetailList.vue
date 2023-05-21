@@ -584,10 +584,10 @@ export default {
   position: absolute;
   display: inline-flex;
   width: 80%;
-  /deep/ .v-input__slot {
+  ::v-deep .v-input__slot {
     min-height: 32px !important;
   }
-  /deep/ input {
+  ::v-deep input {
     margin-top: 0 !important;
   }
 }

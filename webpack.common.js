@@ -1,7 +1,7 @@
 /* eslint-disable */
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
@@ -43,24 +43,28 @@ module.exports = {
       PRODUCTION: mode !== 'development',
       MOZ: moz,
     }),
-    new CleanWebpackPlugin(['dist']),
-    new CopyWebpackPlugin([
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin(
       {
-        from: 'src/manifest.json',
-        to: 'manifest.json',
-        transform(content, path) {
-          content = content.toString()
-          if (mode in config) {
-            Object.entries(config[mode]).map(([key, value]) => {
-              content = content.replace(new RegExp(key, 'g'), value)
-            })
-          }
-          return content
-        }
+        patterns: [
+          {
+            from: 'src/manifest.json',
+            to: 'manifest.json',
+            transform(content, path) {
+              content = content.toString()
+              if (mode in config) {
+                Object.entries(config[mode]).map(([key, value]) => {
+                  content = content.replace(new RegExp(key, 'g'), value)
+                })
+              }
+              return content
+            }
+          },
+          { from: 'src/assets/icons', to: 'assets/icons' },
+          { from: 'src/_locales', to: '_locales' },
+        ]
       },
-      { from: 'src/assets/icons', to: 'assets/icons' },
-      { from: 'src/_locales', to: '_locales' },
-    ]),
+    ),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/app/index.html',
@@ -75,7 +79,7 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      name: true,
+      name: false,
       minChunks: Infinity,
     },
     minimizer: [],
@@ -106,7 +110,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
+        test: /\.s[ac]ss$/,
         use: [
           'vue-style-loader',
           'css-loader',

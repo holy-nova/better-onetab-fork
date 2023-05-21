@@ -26,8 +26,6 @@
 import __ from '@/common/i18n'
 import searchForm from './SearchForm'
 import dynamicTime from '@/app/component/DynamicTime'
-import browser from 'webextension-polyfill'
-import {SYNC_SERVICE_URL} from '@/common/constants'
 import {mapState, mapActions, mapMutations} from 'vuex'
 import {sendMessage} from '@/common/utils'
 

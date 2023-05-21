@@ -129,14 +129,9 @@ const downloadRemoteLists = async () => {
 
 const syncLists = async () => {
   const unlock = await listManager.RWLock.lock()
-  try {
-    await uploadOpsViaWS()
-    await downloadRemoteLists()
-  } catch (error) {
-    throw error
-  } finally {
-    await unlock()
-  }
+  await uploadOpsViaWS()
+  await downloadRemoteLists()
+  await unlock()
 }
 
 const getRemoteOptionsUpdatedTimeViaWS = () => _socketEmitTimeout(window._socket, 'opts.time')

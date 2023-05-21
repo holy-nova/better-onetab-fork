@@ -1,14 +1,20 @@
+root: true
 env:
-  es6: true
+  es2018: true
   browser: true
   webextensions: true
 extends:
+  - eslint:recommended
   - plugin:vue/base
-  - '@cnwangjie/eslint-config'
+parser: vue-eslint-parser
 parserOptions:
-  parser: babel-eslint
-  ecmaVersion: 8
+  parser: "@babel/eslint-parser"
+  ecmaVersion: 2018
   sourceType: module
+  ecmaFeatures:
+    globalReturn: false
+    impliedStrict: false
+    jsx: false
 rules:
   no-console: 0
 globals:
